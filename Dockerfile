@@ -21,8 +21,13 @@ RUN rm /var/cache/apk/*
 RUN rc-update add docker boot 
 
 # Create a user for 'jenkins' to run as non root user
+
+# Add group for Jenkins with UID matching box
 RUN addgroup -g 116 jenkins
+# Add user with UID matching box
 RUN adduser -D -u 112 -G jenkins jenkins 
+
+# Also add user to Docker group. Unneeded?
 RUN adduser jenkins docker
 USER jenkins
 ENV HOME "/home/jenkins"
