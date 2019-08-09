@@ -14,4 +14,5 @@ COPY .gemrc /home/jenkins/.gemrc
 RUN gem install bundler
 RUN gem install foreman
 RUN gem install io-console
+RUN gem install rails
 USER jenkins
