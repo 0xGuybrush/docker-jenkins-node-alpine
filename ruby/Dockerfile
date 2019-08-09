@@ -13,4 +13,5 @@ RUN rm /var/cache/apk/*
 COPY .gemrc /home/jenkins/.gemrc
 RUN gem install bundler
 RUN gem install foreman
+RUN gem install io-console
 USER jenkins
