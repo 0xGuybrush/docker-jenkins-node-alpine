@@ -32,9 +32,10 @@ RUN rc-update add docker boot
 
 # Global Ruby set-up
 COPY .gemrc /home/jenkins/.gemrc
-RUN gem install bundler
 RUN gem install foreman
 RUN gem install rails
+RUN gem install bundler
+RUN mkdir -p /usr/local/bundle/cache/bundler/git
 
 # Create a user for 'jenkins' to run as non root user
 # Add group for Jenkins with UID matching box
@@ -43,6 +44,10 @@ RUN addgroup -g 116 jenkins
 RUN adduser -D -u 112 -G jenkins jenkins 
 # Also add user to Docker group. Unneeded?
 RUN adduser jenkins docker
+
+# Give Jenkins group access to everything in Bundler folder
+RUN chgrp -R jenkins /usr/local/bundle
+RUN chmod -R 775 /usr/local/bundle
 
 # Create Docker metadata directory
 RUN mkdir /home/jenkins/.docker
