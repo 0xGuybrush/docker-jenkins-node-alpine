@@ -11,8 +11,8 @@ RUN apk add --no-cache \
 	openrc \
 	python \
 	py-pip \
-	ruby-dev
-
+	ruby-dev \
+	postgresql-client
 RUN apk add --no-cache \
     build-base \
     gcc \
