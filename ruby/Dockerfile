@@ -2,6 +2,12 @@ FROM 'ruby:2.6.3-alpine3.10'
 
 USER root
 RUN apk update
+
+# Add Chrome tags
+RUN echo "http://dl-2.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories
+RUN echo "http://dl-2.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+RUN echo "http://dl-2.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+
 # cf. https://github.com/andrius/alpine-ruby
 RUN apk add --no-cache \
 	libxml2-dev libxslt-dev pcre-dev libffi-dev \
@@ -12,7 +18,17 @@ RUN apk add --no-cache \
 	python \
 	py-pip \
 	ruby-dev \
-	postgresql-client
+	postgresql-client \
+	zlib-dev \
+	chromium \
+	xvfb \
+	wait4ports \
+	xorg-server \
+	dbus \
+	ttf-freefont \
+	grep \ 
+	udev
+
 RUN apk add --no-cache \
     build-base \
     gcc \
@@ -36,6 +52,10 @@ RUN gem install foreman
 RUN gem install rails
 RUN gem install bundler
 RUN mkdir -p /usr/local/bundle/cache/bundler/git
+
+# Install Chrome
+ENV CHROME_BIN=/usr/bin/chromium-browser
+ENV CHROME_PATH=/usr/lib/chromium/
 
 # Create a user for 'jenkins' to run as non root user
 # Add group for Jenkins with UID matching box
@@ -79,4 +99,5 @@ ENV HOME "/home/jenkins"
 WORKDIR $HOME
 
 # Add Yarn to the PATH
+ENV BROWSER_PATH "/usr/bin/chromium-browser"
 ENV PATH "$PATH:/opt/yarn/latest/bin"
