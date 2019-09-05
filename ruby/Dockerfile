@@ -27,7 +27,8 @@ RUN apk add --no-cache \
 	dbus \
 	ttf-freefont \
 	grep \ 
-	udev
+	udev \
+	curl
 
 RUN apk add --no-cache \
     build-base \
