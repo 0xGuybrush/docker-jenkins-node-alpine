@@ -53,6 +53,7 @@ COPY .gemrc /home/jenkins/.gemrc
 RUN gem install foreman
 RUN gem install rails
 RUN gem install bundler
+RUN gem install rubocop
 RUN mkdir -p /usr/local/bundle/cache/bundler/git
 
 # Install Chrome
