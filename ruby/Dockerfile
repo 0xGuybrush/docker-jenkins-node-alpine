@@ -40,6 +40,7 @@ RUN apk add --no-cache \
 
 # Install awslci itself
 RUN pip install awscli
+RUN pip install xunitmerge
 
 # Remove packages to shrink container size
 RUN apk --purge -v del py-pip
