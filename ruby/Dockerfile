@@ -36,7 +36,8 @@ RUN apk add --no-cache \
     wget \
     git \
     gnupg \
-    tzdata
+    tzdata \
+    ghostscript
 
 # Install awslci itself
 RUN pip install awscli
