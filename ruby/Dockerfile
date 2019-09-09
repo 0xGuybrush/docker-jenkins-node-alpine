@@ -37,7 +37,15 @@ RUN apk add --no-cache \
     git \
     gnupg \
     tzdata \
-    ghostscript
+    ghostscript \
+    mesa-gles \
+    mesa-egl \
+    mesa-dri-swrast
+
+# cf. https://github.com/DevExpress/testcafe/issues/2116
+RUN mkdir -p /usr/lib/chromium/swiftshader
+RUN ln -s /usr/lib/libGLESv2.so.2 /usr/lib/chromium/swiftshader/libGLESv2.so
+RUN ln -s /usr/lib/libEGL.so.1 /usr/lib/chromium/swiftshader/libEGL.so
 
 # Install awslci itself
 RUN pip install awscli
