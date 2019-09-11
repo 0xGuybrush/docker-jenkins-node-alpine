@@ -40,12 +40,14 @@ RUN apk add --no-cache \
     ghostscript \
     mesa-gles \
     mesa-egl \
-    mesa-dri-swrast
+    mesa-dri-swrast \
+    mesa-osmesa
 
 # cf. https://github.com/DevExpress/testcafe/issues/2116
 RUN mkdir -p /usr/lib/chromium/swiftshader
 RUN ln -s /usr/lib/libGLESv2.so.2 /usr/lib/chromium/swiftshader/libGLESv2.so
 RUN ln -s /usr/lib/libEGL.so.1 /usr/lib/chromium/swiftshader/libEGL.so
+RUN ln -s /usr/lib/libOSMesa.so.8 /usr/lib/chromium/libosmesa.so
 
 # Install awslci itself
 RUN pip install awscli
@@ -106,11 +108,18 @@ RUN rm latest.tar.gz*
 # Create a symlink to the latest version. Using the fact that the directory is the only file in this folder to create symlink
 RUN ln -s $(ls) /opt/yarn/latest
 
+
 # Switch to Jenkins user
 USER jenkins
 ENV HOME "/home/jenkins"
+
+
 WORKDIR $HOME
 
 # Add Yarn to the PATH
 ENV BROWSER_PATH "/usr/bin/chromium-browser"
 ENV PATH "$PATH:/opt/yarn/latest/bin"
+
+# https://stackoverflow.com/a/32568666/1474421
+# X Virtual Frame Buffer environment variable
+ENV DISPLAY ":99"
