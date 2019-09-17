@@ -65,6 +65,7 @@ COPY .gemrc /home/jenkins/.gemrc
 RUN gem install foreman
 RUN gem install rails
 RUN gem install bundler
+RUN gem update --system '2.7.9'
 RUN gem install rubocop
 RUN mkdir -p /usr/local/bundle/cache/bundler/git
 
